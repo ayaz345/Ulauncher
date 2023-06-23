@@ -74,8 +74,7 @@ class PickleFramer(GObject.GObject):
 
     # pylint: disable=unused-argument
     def _close_ready(self, _source, result, _user):
-        ret = self._conn.close_finish(result)
-        if ret:
+        if ret := self._conn.close_finish(result):
             log.debug("Connection (%s) closed", self)
         else:
             log.warning("Error closing connection %s", self)

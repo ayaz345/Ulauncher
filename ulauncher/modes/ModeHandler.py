@@ -26,8 +26,7 @@ class ModeHandler:
         for mode in self.modes:
             mode.on_query_change(query)
 
-        mode = self.get_mode_from_query(query)
-        if mode:
+        if mode := self.get_mode_from_query(query):
             return mode.handle_query(query)
         # No mode selected, which means search
         results = self.search(query)
@@ -42,10 +41,7 @@ class ModeHandler:
         return mode and mode.on_query_backspace(query)
 
     def get_mode_from_query(self, query):
-        for mode in self.modes:
-            if mode.is_enabled(query):
-                return mode
-        return None
+        return next((mode for mode in self.modes if mode.is_enabled(query)), None)
 
     def search(self, query, min_score=50, limit=50):
         searchables = []

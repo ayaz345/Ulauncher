@@ -15,7 +15,4 @@ class CalcResult(Result):
         self.description = "Enter to copy to the clipboard" if self.result is not None else error
 
     def on_activation(self, *_):
-        if self.result is not None:
-            return CopyToClipboardAction(str(self.result))
-
-        return True
+        return True if self.result is None else CopyToClipboardAction(str(self.result))

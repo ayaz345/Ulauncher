@@ -93,8 +93,7 @@ class ExtensionManifest(JsonData):
         Ensure that the manifest is valid (or raise error)
         """
         required_fields = ["api_version", "authors", "name", "icon", "triggers"]
-        missing_fields = [f for f in required_fields if not self.get(f)]
-        if missing_fields:
+        if missing_fields := [f for f in required_fields if not self.get(f)]:
             err_msg = f'Extension manifest is missing required field(s): "{", ".join(missing_fields)}"'
             raise ExtensionManifestError(err_msg)
 
@@ -135,7 +134,7 @@ class ExtensionManifest(JsonData):
                     assert (
                         not default or not p.min or default >= p.min
                     ), f'"{id}" "min" value must not be higher than "default_value"'
-                if p.type == "select":
+                elif p.type == "select":
                     assert isinstance(p.options, list), f'"{id}" options field must be a list'
                     assert p.options, f'"{id}" option cannot be empty for select type'
         except AssertionError as e:

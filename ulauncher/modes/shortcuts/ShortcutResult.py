@@ -23,9 +23,9 @@ class ShortcutResult(Result):
 
         if query.keyword == self.keyword and query.argument:
             return description.replace("%s", query.argument)
-        if query.keyword == self.keyword and self.run_without_argument:
-            return "Press Enter to run the shortcut"
-        if query.keyword == self.keyword and not query.argument:
+        if query.keyword == self.keyword:
+            if self.run_without_argument:
+                return "Press Enter to run the shortcut"
             return "Type in your query and press Enter..."
 
         return description.replace("%s", "...")

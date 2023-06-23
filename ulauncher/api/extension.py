@@ -72,10 +72,7 @@ class Extension:
             custom_data_store[ref] = data
             args = [data]
 
-        if callable(event_constructor):
-            return event_constructor(args)
-
-        return None
+        return event_constructor(args) if callable(event_constructor) else None
 
     def trigger_event(self, event: Dict[str, Any]):
         base_event = self.convert_to_baseevent(event)

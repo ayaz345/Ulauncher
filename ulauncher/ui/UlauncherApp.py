@@ -54,8 +54,7 @@ class UlauncherApp(Gtk.Application, AppIndicator):
             self.window.input.set_position(-1)
 
     def do_before_emit(self, *args, **_kwargs):
-        query = args[0].lookup_value("query", GLib.VariantType("s"))
-        if query:
+        if query := args[0].lookup_value("query", GLib.VariantType("s")):
             self.query = query.unpack()
 
     def do_activate(self, *_args, **_kwargs):

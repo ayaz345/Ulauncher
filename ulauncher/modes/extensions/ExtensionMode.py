@@ -22,13 +22,12 @@ class ExtensionMode(BaseMode):
         self.deferredResultRenderer.on_query_change()
 
     def handle_query(self, query: Query):
-        controller = self.extensionServer.get_controller_by_keyword(query.keyword)
-
-        if not controller:
-            msg = "Invalid extension keyword"
-            raise RuntimeError(msg)
-
-        return controller.handle_query(query)
+        if controller := self.extensionServer.get_controller_by_keyword(
+            query.keyword
+        ):
+            return controller.handle_query(query)
+        else:
+            raise RuntimeError("Invalid extension keyword")
 
     def get_triggers(self):
         """

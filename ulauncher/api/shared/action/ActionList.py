@@ -17,11 +17,12 @@ class ActionList(list, BaseAction):
         if not self:
             return True
 
-        for item in self:
-            if item is True or isinstance(item, (str, list)) or (isinstance(item, BaseAction) and item.keep_app_open):
-                return True
-
-        return False
+        return any(
+            item is True
+            or isinstance(item, (str, list))
+            or (isinstance(item, BaseAction) and item.keep_app_open)
+            for item in self
+        )
 
     def run(self):
         for item in self:
